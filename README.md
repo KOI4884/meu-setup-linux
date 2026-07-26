@@ -22,4 +22,4 @@ Para executar este script na sua máquina, siga os passos abaixo no terminal:
 
 1. Clone este repositório:
    ```bash
-   git clone [https://github.com/SEU_USUARIO/meu-setup-linux.git](https://github.com/SEU_USUARIO/meu-setup-linux.git)
+   git clone [https://github.com/KOI4884/meu-setup-linux.git](https://github.com/KOI4884/meu-setup-linux.git)
