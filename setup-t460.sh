@@ -56,6 +56,11 @@ PROGRAMAS_PARA_INSTALAR=(
   powertop
   timeshift
   gufw
+  synaptic
+  vlc
+  code
+  gnome-sushi
+  folder-color
 )
 
 # ---------------------------------------------------------------------- #
@@ -84,17 +89,13 @@ install_apt_packages(){
 install_flatpaks(){
   echo -e "${VERDE}[INFO] - Instalando pacotes Flatpak essenciais...${SEM_COR}"
   flatpak install flathub org.flameshot.Flameshot -y
-  flatpak install flathub com.bitwarden.desktop -y
-  flatpak install flathub org.telegram.desktop -y
+  flatpak install flathub com.obsproject.Studio -y
 }
 
 install_snaps(){
   echo -e "${VERDE}[INFO] - Instalando pacotes Snap...${SEM_COR}"
   # O core é fundamental para garantir o bom funcionamento de outros snaps
   sudo snap install core
-  
-  # Exemplo de instalação via Snap (remova o # se quiser instalar o Authy)
-  # sudo snap install authy
 }
 
 # ----------------------------- CONFIGS EXTRAS ----------------------------- #
