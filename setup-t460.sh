@@ -7,7 +7,6 @@ set -e
 
 ## URLS DE DOWNLOAD DIRETO
 URL_GOOGLE_CHROME="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
-URL_ANYDESK="https://download.anydesk.com/linux/anydesk_6.3.0-1_amd64.deb"
 
 ## DIRETÓRIOS
 DIRETORIO_DOWNLOADS="$HOME/Downloads/programas"
@@ -60,16 +59,14 @@ PROGRAMAS_PARA_INSTALAR=(
   vlc
   code
   gnome-sushi
-  folder-color
 )
 
 # ---------------------------------------------------------------------- #
 
 install_debs(){
-  echo -e "${VERDE}[INFO] - Baixando pacotes .deb (Chrome, AnyDesk)...${SEM_COR}"
+  echo -e "${VERDE}[INFO] - Baixando pacotes .deb (Chrome)...${SEM_COR}"
   mkdir -p "$DIRETORIO_DOWNLOADS"
   wget -c "$URL_GOOGLE_CHROME" -P "$DIRETORIO_DOWNLOADS"
-  wget -c "$URL_ANYDESK"       -P "$DIRETORIO_DOWNLOADS"
 
   echo -e "${VERDE}[INFO] - Instalando pacotes .deb...${SEM_COR}"
   sudo dpkg -i $DIRETORIO_DOWNLOADS/*.deb || sudo apt --fix-broken install -y
@@ -78,7 +75,8 @@ install_debs(){
 install_apt_packages(){
   echo -e "${VERDE}[INFO] - Instalando ferramentas de Cyber, Infra e Dev...${SEM_COR}"
   for nome_do_programa in ${PROGRAMAS_PARA_INSTALAR[@]}; do
-    if ! dpkg -l | grep -qw $nome_do_programa; then
+    # Correção: Agora verifica se o pacote está de fato instalado e funcional
+    if ! dpkg-query -W -f='${Status}' "$nome_do_programa" 2>/dev/null | grep -q "ok installed"; then
       sudo apt install "$nome_do_programa" -y
     else
       echo "[INSTALADO] - $nome_do_programa"
@@ -106,9 +104,6 @@ configuracoes_hardware(){
   # Adicionando seu usuário ao grupo do Docker e do VirtualBox
   sudo usermod -aG docker $USER
   sudo usermod -aG vboxusers $USER
-
-  # Desativando o AnyDesk da inicialização automática
-  sudo systemctl disable anydesk || true
 
   # Configurando o TLP para travar o carregamento em 80% (Power Bridge)
   sudo tlp start
